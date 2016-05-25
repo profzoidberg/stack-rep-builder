@@ -1,3 +1,14 @@
+$(document).ready( function() {
+	$('.unanswered-getter').submit( function(e){
+		e.preventDefault();
+		// zero out results if previous search has run
+		$('.results').html('');
+		// get the value of the tags the user submitted
+		var tags = $(this).find("input[name='tags']").val();
+		getUnanswered(tags);
+	});
+});
+
 // this function takes the question object returned by the StackOverflow request
 // and returns new result to be appended to DOM
 var showQuestion = function(question) {
@@ -80,15 +91,3 @@ var getUnanswered = function(tags) {
 		$('.search-results').append(errorElem);
 	});
 };
-
-
-$(document).ready( function() {
-	$('.unanswered-getter').submit( function(e){
-		e.preventDefault();
-		// zero out results if previous search has run
-		$('.results').html('');
-		// get the value of the tags the user submitted
-		var tags = $(this).find("input[name='tags']").val();
-		getUnanswered(tags);
-	});
-});
