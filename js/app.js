@@ -95,15 +95,15 @@ var showError = function(error){
 }
 
 	// Get Inspired
-var showAnswerer = function(answerer) {
-	var result = $('.templates .answerer').clone();
-	var userName = result.find('.user-name');
-	userName.text(answerer.user.display_name);
-	var userRep = result.find('.user-rep');
-	userRep.text(answerer.user.reputation);
-	return result;
-};
 
+	var showAnswerer = function(answerer) {
+		var result = $('.templates .answerer').clone();
+		var userName = result.find('.user-name');
+		userName.text(answerer.user.display_name);
+		var userRep = result.find('.user-rep');
+		userRep.text(answerer.user.reputation);
+		return result;
+	};
 
 	function getTopAnswerers(tag) {
 		var request = { 
@@ -116,7 +116,8 @@ var showAnswerer = function(answerer) {
 			type: "GET",
 		})
 		.done(function(result){ //this waits for the ajax to return with a succesful promise object
-		var searchResults = showSearchResults(request.tag, result.items.length);
+		var searchResults = showSearchResults(tag, result.items.length);
+		console.log(result);
 		$('.search-results').html(searchResults);
 		$.each(result.items, function(i, item) {
 			var answerer = showAnswerer(item);
