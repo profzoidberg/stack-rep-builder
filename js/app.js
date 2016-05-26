@@ -79,7 +79,6 @@ var showError = function(error){
 	})
 	.done(function(result){ //this waits for the ajax to return with a succesful promise object
 		var searchResults = showSearchResults(request.tagged, result.items.length);
-		console.log(result);
 		$('.search-results').html(searchResults);
 		//$.each is a higher order function. It takes an array and a function as an argument.
 		//The function is executed once for each item in the array.
@@ -94,14 +93,24 @@ var showError = function(error){
 	});
 }
 
-	// Get Inspired
+	// Get Inspired Challenge
 
 	var showAnswerer = function(answerer) {
+		// clone our result template code
+		// code below creates a blank template that is "hidden"
+
 		var result = $('.templates .answerer').clone();
+		
+		// this locates <dd> with the class '.user-name' in the blank template
 		var userName = result.find('.user-name');
+		// this adds the response data as text into the <dd> with class '.user-name'
 		userName.text(answerer.user.display_name);
+
+		// this locates <dd> with the class '.user-rep' in the blank template
 		var userRep = result.find('.user-rep');
+		// this adds the response data as text into the <dd> with class '.user-rep'
 		userRep.text(answerer.user.reputation);
+
 		return result;
 	};
 
@@ -111,13 +120,14 @@ var showError = function(error){
 		};
 		$.ajax({
 			url: "http://api.stackexchange.com/2.2/tags/" + tag + "/top-answerers/all_time",
+			// + tag + adds the tag that is passed through the getTopAnswerers function and concatenates it into the url string
+
 			data: request,
 			dataType: "jsonp",
 			type: "GET",
 		})
 		.done(function(result){ //this waits for the ajax to return with a succesful promise object
 		var searchResults = showSearchResults(tag, result.items.length);
-		console.log(result);
 		$('.search-results').html(searchResults);
 		$.each(result.items, function(i, item) {
 			var answerer = showAnswerer(item);
